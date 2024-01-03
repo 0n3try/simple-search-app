@@ -1,7 +1,8 @@
 import { useFetch } from "../../hooks/UseFetch";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const Blog = () => {
+  const [search, setSearch] = useSearchParams();
   const { data, load, error } = useFetch(
     "https://jsonplaceholder.typicode.com/posts"
   );
@@ -21,15 +22,37 @@ const Blog = () => {
     );
   }
 
+  const handleChange = (e) => {
+    let filter = e.target.value;
+    if (filter) {
+      setSearch({ filter });
+    } else {
+      setSearch({});
+    }
+  };
+
   return (
     <div className="container">
-      <h1 className="m-2">Blog Using api</h1>
+      <h1 className="my-2">Blog Using api</h1>
+      <input
+        type="text"
+        className="form-control my-3"
+        onChange={handleChange}
+        value={search.get("filter") || ""}
+      />
       <section className="list-group">
-        {data.map((item) => (
-          <Link to={`${item.id}`} key={item.id} className="list-group-item">
-            {item.title}
-          </Link>
-        ))}
+        {data
+          .filter((item) => {
+            let filter = search.get("filter");
+            if (!filter) return true;
+            let name = item.title.toLowerCase();
+            return name.startsWith(filter.toLowerCase());
+          })
+          .map((item) => (
+            <Link to={`${item.id}`} key={item.id} className="list-group-item">
+              {item.title}
+            </Link>
+          ))}
       </section>
     </div>
   );
