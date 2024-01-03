@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/UseFetch";
+import { Link } from "react-router-dom";
 
 const BlogDetails = () => {
   const param = useParams();
@@ -10,7 +11,7 @@ const BlogDetails = () => {
   if (load) {
     return (
       <div className="container">
-        <h2>... Load</h2>
+        <h2>... Loading</h2>
       </div>
     );
   }
@@ -27,9 +28,12 @@ const BlogDetails = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container mt-3">
       <h1>{data.title}</h1>
       <p>{data.body}</p>
+      <Link to="/blog" className="btn btn-primary">
+        Back To Blog
+      </Link>
     </div>
   );
 };
