@@ -45,7 +45,7 @@ const Blog = () => {
           .filter((item) => {
             let filter = search.get("filter");
             if (!filter) return true;
-            let name = item.title.toLowerCase();
+            let name(filter.toLowerCase())
             return name = filter.toLowerCase();
           })
           .map((item) => (
