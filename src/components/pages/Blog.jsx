@@ -45,8 +45,8 @@ const Blog = () => {
           .filter((item) => {
             let filter = search.get("filter");
             if (!filter) return true;
-            let name(filter.toLowerCase())
-            return name = filter.toLowerCase();
+            let name = item.title.toLowerCase();
+            return name.startsWith(filter.toLowerCase());
           })
           .map((item) => (
             <Link to={`${item.id}`} key={item.id} className="list-group-item">
